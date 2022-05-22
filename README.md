@@ -1,6 +1,8 @@
 # flats-scraper
-Simplistic/naive (no data validation, no synching, simply starts afresh each time) web scraper.
+Simplistic (no synching, simply starts afresh each time) web scraper.
 Scrapes data about available flats into MongoDB - example for BytyRoudna website.
+
+todo: more validations, logging
 
 Scrapy & MongoDB & pydantic
 
