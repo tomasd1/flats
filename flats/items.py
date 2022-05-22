@@ -1,18 +1,16 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
+from pydantic import BaseModel, ValidationError, validator
 
-import scrapy
+class FlatsItem(BaseModel):
+    project: str
+    id: int
+    type: str
+    price: str
+    rooms: str
+    area: str
+    availability: str
 
-
-class FlatsItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    project = scrapy.Field()
-    id = scrapy.Field()
-    type = scrapy.Field() # (flat, house)
-    price = scrapy.Field()
-    rooms = scrapy.Field()
-    area = scrapy.Field()
-    availability = scrapy.Field()
+    # just some simple validation example for starters
+    @validator('type')
+    def type_allowed(cls, v):
+        if v not in ['flat','house', 'non-residential']:
+            raise ValueError(f"wrong item type: {v}")

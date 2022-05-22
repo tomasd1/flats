@@ -8,6 +8,7 @@
 from itemadapter import ItemAdapter
 import pymongo
 import sys
+from pydantic import ValidationError
 from .items import FlatsItem
 
 
@@ -36,6 +37,11 @@ class FlatsPipeline:
         self.client.close()
 
     def process_item(self, item, spider):
-        data = dict(FlatsItem(item))
+        try:
+            data = dict(FlatsItem(**item))
+        except ValidationError as e:
+            # TODO logging
+            print(e)
+
         self.db[self.collection].insert_one(data)
         return item
